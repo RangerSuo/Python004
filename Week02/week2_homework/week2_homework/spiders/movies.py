@@ -1,14 +1,8 @@
-#作业二：
-#（1）使用 Scrapy 框架和 XPath 抓取猫眼电影的前 10 个电影名称、电影类型和上映时间，
-#（2）并以 UTF-8 字符集保存到 csv 格式的文件中。
-# 猫眼电影网址： https://maoyan.com/films?showType=3
-# 要求：必须使用 Scrapy 框架及其自带的 item pipeline、选择器功能，不允许使用 bs4 进行页面内容的筛选。
-
 # -*- coding: utf-8 -*-
 
 import scrapy
 from scrapy.selector import Selector
-from spiders.items import SpidersItems
+from week2_homework.items import Week2HomeworkItem
 
 class MoviesSpider(scrapy.Spider):
     name = 'movies'
@@ -26,7 +20,7 @@ class MoviesSpider(scrapy.Spider):
         movies = Selector(response=response).xpath('//div[@class="movie-hover-info"]')
         
         for movie in movies[:10]:
-            item = SpidersItems()
+            item = Week2HomeworkItem()
             
             movie_name = movie.xpath('./div[@class="movie-hover-title"][1]/span/text()').extract_first().strip()
             movie_type = movie.xpath('./div[@class="movie-hover-title"][2]/text()')[1].extract().strip()
